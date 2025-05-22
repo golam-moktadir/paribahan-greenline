@@ -104,4 +104,8 @@ class Employee extends Model
         return $this->belongsTo(Member::class, 'employee_saved_by');
     }
 
+    // public function booths(){
+    //     return $this->hasMany(::class, 'city_id');
+    // }
+
 }

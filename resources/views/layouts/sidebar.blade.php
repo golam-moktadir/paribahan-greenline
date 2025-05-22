@@ -4,13 +4,12 @@
     <div class="flex items-center justify-between border-b border-gray-200 px-4 py-2 dark:border-gray-800">
         <!-- Logo - Hidden when collapsed -->
         <!-- Center: Logo -->
-        <div class="flex justify-center">
-            <a href="{{ route('dashboard') }}"
-                class="sidebar-logo focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded-md transition-all duration-150 hover:scale-105 hover:opacity-95"
+        <div class="flex items-center justify-center h-full w-full">
+            <a href="{{ route('dashboard') }}" class="sidebar-logo rounded-md shadow-md bg-white dark:bg-gray-800"
                 id="sidebar-logo">
-                <img class="h-6 w-auto sm:h-10 dark:hidden" src="{{ asset('assets/images/logo/logo.png') }}"
-                    alt="Company Logo" width="100" height="30" loading="lazy">
-                <img class="hidden h-6 w-auto sm:h-10 dark:block" src="{{ asset('assets/images/logo/logo-dark.png') }}"
+                <img class="h-10 w-auto dark:hidden" src="{{ asset('assets/images/logo/logo.png') }}" alt="Company Logo"
+                    width="100" height="30" loading="lazy">
+                <img class="hidden h-10 w-auto dark:block" src="{{ asset('assets/images/logo/logo-dark.png') }}"
                     alt="Company Logo Dark" width="100" height="30" loading="lazy">
             </a>
         </div>
@@ -25,7 +24,7 @@
         </button>
     </div>
     <!-- Sidebar Menu -->
-    <div class="h-[calc(100vh-73px)] overflow-y-auto overflow-x-hidden px-3 py-4">
+    <div class="h-[calc(100vh-60px)] overflow-y-auto overflow-x-hidden px-3 py-4 shadow-lg bg-white rounded-lg">
         <nav>
             <!-- Menu Group -->
             <div class="mb-6">
@@ -123,6 +122,149 @@
                         </ul>
                     </li>
 
+                    <!-- Booths Menu -->
+                    <li>
+                        <button type="button" id="booths-menu-button"
+                            class="sidebar-menu-item group flex w-full items-center rounded-lg p-2.5 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            aria-expanded="false" aria-controls="booths-menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512"
+                                class="w-5 h-5 text-gray-500 dark:text-gray-400">
+                                <path
+                                    d="M32 64C14.33 64 0 78.33 0 96v32c0 17.67 14.33 32 32 32v288c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V160h64v288c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V160h64v288c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V160c17.7 0 32-14.3 32-32V96c0-17.67-14.3-32-32-32H32zm576 64H32V96h576v32z" />
+                            </svg>
+                            <span class="sidebar-text ml-3 flex-1 text-left truncate">Booths</span>
+                            <svg id="booths-menu-arrow"
+                                class="sidebar-arrow h-4 w-4 transition-transform duration-200" fill="currentColor"
+                                viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <!-- booths Dropdown -->
+                        <ul id="booths-menu" class="hidden space-y-1 pl-9 pt-1">
+                            <li>
+                                <a href="{{ route('booths.index') }}"
+                                    class="sidebar-submenu-item flex items-center rounded-lg p-2 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 {{ request()->routeIs('booths.index') ? 'bg-gray-200 dark:bg-gray-800' : '' }}">
+                                    <span class="truncate">Booth List</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('booths.create') }}"
+                                    class="sidebar-submenu-item flex items-center rounded-lg p-2 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 {{ request()->routeIs('booths.create') ? 'bg-gray-200 dark:bg-gray-800' : '' }}">
+                                    <span class="truncate">Add Booth</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Guides Menu -->
+                    <li>
+                        <button type="button" id="guides-menu-button"
+                            class="sidebar-menu-item group flex w-full items-center rounded-lg p-2.5 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            aria-expanded="false" aria-controls="guides-menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512"
+                                class="w-5 h-5 text-gray-500 dark:text-gray-400">
+                                <path
+                                    d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zM111.9 288c-22.5 0-43.3 9.2-58.3 24.2S29.3 345.5 29.3 368.1c.1 17.5 3.7 34.8 10.9 50.7l72.1 81.4c4.5 5.1 12.1 6.7 18.3 4l45.8-20.3L147 351.2l9.7-7.6 28.7 63.8-9.8 85.1 25.5 19.3 25.5-19.3-9.8-85.1 28.7-63.8 9.7 7.6-29.4 132.7 45.8 20.3c6.2 2.7 13.8 1.1 18.3-4l72.1-81.4c7.1-15.9 10.8-33.2 10.9-50.7c0-22.6-9.2-43.3-24.2-58.3S358.6 288 336.1 288H111.9z" />
+                            </svg>
+                            <span class="sidebar-text ml-3 flex-1 text-left truncate">Guides</span>
+                            <svg id="guides-menu-arrow" class="sidebar-arrow h-4 w-4 transition-transform duration-200"
+                                fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <!-- Guides Dropdown -->
+                        <ul id="guides-menu" class="hidden space-y-1 pl-9 pt-1">
+                            <li>
+                                <a href="{{ route('guides.index') }}"
+                                    class="sidebar-submenu-item flex items-center rounded-lg p-2 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 {{ request()->routeIs('guides.index') ? 'bg-gray-200 dark:bg-gray-800' : '' }}">
+                                    <span class="truncate">Guide List</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('guides.create') }}"
+                                    class="sidebar-submenu-item flex items-center rounded-lg p-2 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 {{ request()->routeIs('guides.create') ? 'bg-gray-200 dark:bg-gray-800' : '' }}">
+                                    <span class="truncate">Add Guide</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Offences Menu -->
+                    <li>
+                        <button type="button" id="offences-menu-button"
+                            class="sidebar-menu-item group flex w-full items-center justify-between rounded-lg p-2.5 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            aria-expanded="false" aria-controls="offences-menu">
+                            <!-- Left: Icon and Text -->
+                            <div class="flex items-center space-x-3">
+                                <i class="fa fa-balance-scale text-gray-500 dark:text-gray-400 text-base"></i>
+                                <span class="sidebar-text truncate">Offences</span>
+                            </div>
+                            <!-- Right: Dropdown arrow -->
+                            <svg id="offences-menu-arrow"
+                                class="sidebar-arrow h-4 w-4 text-gray-500 dark:text-gray-400 transition-transform duration-200"
+                                fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <!-- Offences Dropdown -->
+                        <ul id="offences-menu" class="hidden space-y-1 pl-9 pt-1">
+                            <li>
+                                <a href="{{ route('offences.index') }}"
+                                    class="sidebar-submenu-item flex items-center rounded-lg p-2 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 {{ request()->routeIs('offences.index') ? 'bg-gray-200 dark:bg-gray-800' : '' }}">
+                                    <span class="truncate">Offence List</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('offences.create') }}"
+                                    class="sidebar-submenu-item flex items-center rounded-lg p-2 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 {{ request()->routeIs('offences.create') ? 'bg-gray-200 dark:bg-gray-800' : '' }}">
+                                    <span class="truncate">Add Offence</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    {{-- <!-- Booths Menu -->
+                    <li>
+                        <button type="button" id="booths-menu-button"
+                            class="sidebar-menu-item group flex w-full items-center rounded-lg p-2.5 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+                            aria-expanded="false" aria-controls="booths-menu">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512"
+                                class="w-5 h-5 text-gray-500 dark:text-gray-400">
+                                <path
+                                    d="M32 64C14.33 64 0 78.33 0 96v32c0 17.67 14.33 32 32 32v288c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V160h64v288c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V160h64v288c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V160c17.7 0 32-14.3 32-32V96c0-17.67-14.3-32-32-32H32zm576 64H32V96h576v32z" />
+                            </svg>
+                            <span class="sidebar-text ml-3 flex-1 text-left truncate">Booths</span>
+                            <svg id="booths-menu-arrow" class="sidebar-arrow h-4 w-4 transition-transform duration-200"
+                                fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <!-- booths Dropdown -->
+                        <ul id="booths-menu" class="hidden space-y-1 pl-9 pt-1">
+                            <li>
+                                <a href="{{ route('guides.index') }}"
+                                    class="sidebar-submenu-item flex items-center rounded-lg p-2 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 {{ request()->routeIs('guides.index') ? 'bg-gray-200 dark:bg-gray-800' : '' }}">
+                                    <span class="truncate">Booth List</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('guides.create') }}"
+                                    class="sidebar-submenu-item flex items-center rounded-lg p-2 text-sm font-medium transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 {{ request()->routeIs('guides.create') ? 'bg-gray-200 dark:bg-gray-800' : '' }}">
+                                    <span class="truncate">Add Booth</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li> --}}
+
+
                 </ul>
             </div>
         </nav>
@@ -159,7 +301,6 @@
     /* Expanded state styles */
     #sidebar:not(.collapsed) {
         width: 16rem;
-        /* Full width */
     }
 
     /* Icon alignment */
@@ -170,7 +311,7 @@
 
 <script>
     // Self-executing function for faster initialization
-    (function() {
+    (function () {
         // Sidebar state management
         const sidebar = {
             init() {
@@ -215,14 +356,28 @@
         // Menu toggle
         const menu = {
             init() {
+                // employees
                 this.employeesButton = document.getElementById('employees-menu-button');
                 this.employeesMenu = document.getElementById('employees-menu');
                 this.employeesArrow = document.getElementById('employees-menu-arrow');
-
                 // drivers
                 this.driversButton = document.getElementById('drivers-menu-button');
                 this.driversMenu = document.getElementById('drivers-menu');
                 this.driversArrow = document.getElementById('drivers-menu-arrow');
+                // guides
+                this.guidesButton = document.getElementById('guides-menu-button');
+                this.guidesMenu = document.getElementById('guides-menu');
+                this.guidesArrow = document.getElementById('guides-menu-arrow');
+
+                // booths
+                this.boothsButton = document.getElementById('booths-menu-button');
+                this.boothsMenu = document.getElementById('booths-menu');
+                this.boothsArrow = document.getElementById('booths-menu-arrow');
+
+                // offences
+                this.offencesButton = document.getElementById('offences-menu-button');
+                this.offencesMenu = document.getElementById('offences-menu');
+                this.offencesArrow = document.getElementById('offences-menu-arrow');
 
                 const path = window.location.pathname;
 
@@ -230,6 +385,12 @@
                     this.openMenu(this.employeesMenu, this.employeesArrow);
                 } else if (path.includes('drivers')) {
                     this.openMenu(this.driversMenu, this.driversArrow);
+                } else if (path.includes('guides')) {
+                    this.openMenu(this.guidesMenu, this.guidesArrow);
+                } else if (path.includes('booths')) {
+                    this.openMenu(this.boothsMenu, this.boothsArrow);
+                } else if (path.includes('offences')) {
+                    this.openMenu(this.offencesMenu, this.offencesArrow);
                 }
 
                 this.bindEvents();
@@ -246,6 +407,25 @@
                         this.toggleMenu(this.driversMenu, this.driversArrow);
                     });
                 }
+
+                if (this.guidesButton) {
+                    this.guidesButton.addEventListener('click', () => {
+                        this.toggleMenu(this.guidesMenu, this.guidesArrow);
+                    });
+                }
+
+                if (this.boothsButton) {
+                    this.boothsButton.addEventListener('click', () => {
+                        this.toggleMenu(this.boothsMenu, this.boothsArrow);
+                    });
+                }
+
+                if (this.offencesButton) {
+                    this.offencesButton.addEventListener('click', () => {
+                        this.toggleMenu(this.offencesMenu, this.offencesArrow);
+                    });
+                }
+
             },
             toggleMenu(menu, arrow) {
                 menu.classList.toggle('hidden');

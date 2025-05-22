@@ -3,7 +3,7 @@
 @section('title', 'Dashboard Overview')
 
 @section('content')
-    <div class="mx-auto max-w-8xl p-2 sm:p-4">
+    <div class="mx-auto p-1 sm:p-2">
         <!-- Stats Grid -->
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <!-- Transports Card -->
@@ -103,8 +103,7 @@
                     @forelse(($stats['recent_activities'] ?? []) as $activity)
                         <div class="flex items-start">
                             <div class="flex-shrink-0 pt-0.5">
-                                <div
-                                    class="h-3 w-3 rounded-full {{ $loop->index % 2 === 0 ? 'bg-blue-500' : 'bg-green-500' }}">
+                                <div class="h-3 w-3 rounded-full {{ $loop->index % 2 === 0 ? 'bg-blue-500' : 'bg-green-500' }}">
                                 </div>
                             </div>
                             <div class="ml-3">
@@ -132,23 +131,8 @@
             <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
                 <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-white">Quick Actions</h3>
                 <div class="grid grid-cols-2 gap-3">
-                    <a href="#"
-                        class="flex items-center justify-center rounded-lg bg-gray-100 px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
-                        <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                        New Transport
-                    </a>
-                    <a href="{{ route('employees.create') }}"
-                        class="flex items-center justify-center rounded-lg bg-gray-100 px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
-                        <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
-                            </path>
-                        </svg>
-                        Add Employee
-                    </a>
+
+
                 </div>
             </div>
         </div>

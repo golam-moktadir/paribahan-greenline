@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Member;
+
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;

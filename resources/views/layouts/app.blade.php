@@ -143,13 +143,10 @@
             @include('layouts.header')
 
             <!-- Main Content Area -->
-            <main class="flex-1 overflow-auto p-1 md:p-3 focus:outline-none">
+            <main class="flex-1 overflow-auto p-1 md:p-2 focus:outline-none">
                 <div class="mx-auto max-w-[96rem]">
                     <!-- Compact Page Header -->
-                    <header class="mb-2">
-                        <h1 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
-                            @yield('title', 'Untitled')
-                        </h1>
+                    <header class="mb-1">
                         @hasSection('breadcrumbs')
                             <nav class="mt-1 text-sm">
                                 @yield('breadcrumbs')
@@ -158,7 +155,10 @@
                     </header>
 
                     <!-- Minimal Content Container -->
-                    <div class="bg-white/90 dark:bg-gray-800/90 rounded p-2 shadow">
+                    <div class="bg-white/90 dark:bg-gray-800/90 rounded p-1 shadow">
+                        <h1 class="text-xl font-semibold text-gray-800 dark:text-gray-200 pl-2">
+                            @yield('title', 'Untitled')
+                        </h1>
                         @yield('content')
                     </div>
                 </div>

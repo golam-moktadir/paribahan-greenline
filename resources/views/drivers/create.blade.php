@@ -4,7 +4,7 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('assets/vendor/datapicker/flatpickr.min.css') }}" as="style">
-    <link rel="stylesheet" href="{{ asset('assets/css/drivers/driver-create.min.css') }}" as="style">
+    <link rel="stylesheet" href="{{ asset('assets/css/components/create-edit-page.css') }}" as="style">
     <style>
         .file-preview {
             margin-top: 10px;
@@ -44,7 +44,10 @@
 @section('content')
     <div class="form-container">
         <div class="card">
-            <h1 class="text-sm font-semibold text-gray-900 dark:text-white mb-2">Add New Driver</h1>
+            <h1 class="text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                <i class="fas fa-plus mr-2 text-gray-500"></i>
+                Add New Driver
+            </h1>
 
             @if ($errors->any())
                 <div class="error-message alert alert-danger">
@@ -93,11 +96,14 @@
                                 fn($label, $value) => [
                                     'value' => $value,
                                     'label' => $label,
-                                    'selected' => old('status', 'active') == $value,
+                                    'selected' => (string) old('status', '1') === (string) $value,
                                 ],
                             )"
                                 hint="Select status" />
 
+                            <x-form.input-group name="id_no" label="ID No." type="text" minlength="4" maxlength="20"
+                                pattern="^[A-Z0-9]+$" title="4–20 uppercase letters and numbers" hint="e.g., DI1234"
+                                :value="old('id_no')" />
                         </div>
 
                         <!-- Personal Information -->
@@ -111,35 +117,14 @@
                                 title="4–255 characters, letters, spaces, periods" hint="e.g., Michael Smith"
                                 :value="old('father_name')" />
                             <x-form.input-group name="phone" label="Phone Number" type="tel" required
-                                pattern="0[0-9]{9,10}" maxlength="11" placeholder="01789012345"
-                                title="10-11 digits starting with 0" hint="e.g., 01789012345" :value="old('phone')" />
+                                pattern="0[0-9]{6,10}" maxlength="11" placeholder="01789012345"
+                                title="6-11 digits starting with 0" hint="e.g., 01789012345" :value="old('phone')" />
                             <x-form.input-group name="birth_date" id="birth_date" label="Date of Birth" type="date"
                                 required max="{{ \Carbon\Carbon::now()->subYears(15)->format('Y-m-d') }}"
                                 extra-attributes="onchange=validateJoiningDate()" hint="15+ years old" :value="old('birth_date')" />
-                        </div>
-                    </div>
-
-                    <!-- Column 2: Identification & Attachments -->
-                    <div>
-                        <!-- Identification -->
-                        <div>
-                            <h2 class="section-title">Identification</h2>
-                            <x-form.input-group name="nid_no" label="NID No." type="text" minlength="8" maxlength="20"
-                                pattern="[0-9]+" title="8–20 digits" hint="e.g., 1234567890" :value="old('nid_no')" />
-                            <x-form.input-group name="driving_license_no" label="Driving License No." type="text"
-                                minlength="8" maxlength="20" pattern="[A-Z0-9]+" title="8–20 alphanumeric characters"
-                                hint="e.g., DL12345678" :value="old('driving_license_no')" />
-                            <x-form.input-group name="insurance_no" label="Insurance No." type="text" minlength="8"
-                                maxlength="20" pattern="[A-Z0-9]+" title="8–20 alphanumeric characters"
-                                hint="e.g., INS123456" :value="old('insurance_no')" />
-                        </div>
-
-                        <!-- Attachments -->
-                        <div class="mt-2">
-                            <h2 class="section-title">Attachments</h2>
                             <div>
-                                <x-form.file-input name="avatar_url" label="Profile Photo" accept=".jpg,.jpeg,.png,.webp"
-                                    hint="JPG/PNG, max 512KB" />
+                                <x-form.file-input name="avatar_url" label="Profile Photo" accept=".jpg,.jpeg,.png,.gif"
+                                    hint="JPG/PNG/GIF, max 512KB" />
                                 <div class="file-preview">
                                     <img id="avatar_url_preview" class="hidden" alt="Profile Photo Preview">
                                     <div id="avatar_url_info" class="file-info hidden">
@@ -149,38 +134,99 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Identification & Attachments -->
+                    <div>
+                        <!-- Identification -->
+                        <div>
+                            <h2 class="section-title">Identification</h2>
+                            <x-form.input-group name="nid_no" label="NID No." type="text" minlength="8" maxlength="20"
+                                required pattern="[0-9]+" title="8–20 digits" hint="e.g., 1234567890" :value="old('nid_no')" />
+                            <x-form.input-group name="driving_license_no" label="Driving License No." type="text"
+                                minlength="8" maxlength="20" required pattern="[A-Z0-9]+"
+                                title="8–20 alphanumeric characters" hint="e.g., DL12345678" :value="old('driving_license_no')" />
+                            <x-form.input-group name="insurance_no" label="Insurance No." type="text" minlength="8"
+                                maxlength="30" pattern="[A-Z0-9]+" title="8–30 alphanumeric characters"
+                                hint="e.g., INS123456" :value="old('insurance_no')" />
+                        </div>
+
+                        <!-- Attachments -->
+                        <div class="mt-2">
+                            <h2 class="section-title">Attachments</h2>
+                            {{-- Nid --}}
                             <div>
-                                <x-form.file-input name="nid_attachment" label="NID Scan" accept=".jpg,.jpeg,.png,.pdf"
-                                    hint="JPG/PNG/PDF, max 512KB" />
+                                <x-form.file-input name="nid_front_attachment" label="NID Front Scan"
+                                    accept=".jpg,.jpeg,.png,.gif,.pdf" required hint="JPG/PNG/GIF/PDF, max 512KB" />
                                 <div class="file-preview">
-                                    <img id="nid_attachment_preview" class="hidden" alt="NID Scan Preview">
-                                    <div id="nid_attachment_info" class="file-info hidden">
-                                        <p><strong>File Size:</strong> <span id="nid_attachment_size"></span> KB</p>
-                                        <p><strong>Resolution:</strong> <span id="nid_attachment_resolution"></span></p>
-                                        <p><strong>File Type:</strong> <span id="nid_attachment_type"></span></p>
+                                    <img id="nid_front_attachment_preview" class="hidden" alt="NID Front Scan Preview">
+                                    <div id="nid_front_attachment_info" class="file-info hidden">
+                                        <p><strong>File Size:</strong> <span id="nid_front_attachment_size"></span> KB</p>
+                                        <p><strong>Resolution:</strong> <span id="nid_front_attachment_resolution"></span>
+                                        </p>
+                                        <p><strong>File Type:</strong> <span id="nid_front_attachment_type"></span></p>
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <x-form.file-input name="driving_license_attachment" label="Driving License Scan"
-                                    accept=".jpg,.jpeg,.png,.pdf" hint="JPG/PNG/PDF, max 512KB" />
+                                <x-form.file-input name="nid_back_attachment" label="NID Back Scan"
+                                    accept=".jpg,.jpeg,.png,.gif,.pdf" required hint="JPG/PNG/GIF/PDF, max 512KB" />
                                 <div class="file-preview">
-                                    <img id="driving_license_attachment_preview" class="hidden"
-                                        alt="Driving License Scan Preview">
-                                    <div id="driving_license_attachment_info" class="file-info hidden">
-                                        <p><strong>File Size:</strong> <span id="driving_license_attachment_size"></span>
+                                    <img id="nid_back_attachment_preview" class="hidden" alt="NID Back Scan Preview">
+                                    <div id="nid_back_attachment_info" class="file-info hidden">
+                                        <p><strong>File Size:</strong> <span id="nid_back_attachment_size"></span> KB</p>
+                                        <p><strong>Resolution:</strong> <span id="nid_back_attachment_resolution"></span>
+                                        </p>
+                                        <p><strong>File Type:</strong> <span id="nid_back_attachment_type"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- Driving License --}}
+                            <div>
+                                <x-form.file-input name="driving_license_front_attachment"
+                                    label="Driving License Front Scan" accept=".jpg,.jpeg,.png,.gif,.pdf" required
+                                    hint="JPG/PNG/GIF/PDF, max 512KB" />
+                                <div class="file-preview">
+                                    <img id="driving_license_front_attachment_preview" class="hidden"
+                                        alt="Driving License Front Scan Preview">
+                                    <div id="driving_license_front_attachment_info" class="file-info hidden">
+                                        <p><strong>File Size:</strong> <span
+                                                id="driving_license_front_attachment_size"></span>
                                             KB
                                         </p>
                                         <p><strong>Resolution:</strong> <span
-                                                id="driving_license_attachment_resolution"></span></p>
-                                        <p><strong>File Type:</strong> <span id="driving_license_attachment_type"></span>
+                                                id="driving_license_front_attachment_resolution"></span></p>
+                                        <p><strong>File Type:</strong> <span
+                                                id="driving_license_front_attachment_type"></span>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div>
+                                <x-form.file-input name="driving_license_back_attachment"
+                                    label="Driving License Back Scan" accept=".jpg,.jpeg,.png,.gif,.pdf" required
+                                    hint="JPG/PNG/GIF/PDF, max 512KB" />
+                                <div class="file-preview">
+                                    <img id="driving_license_back_attachment_preview" class="hidden"
+                                        alt="Driving License Back Scan Preview">
+                                    <div id="driving_license_back_attachment_info" class="file-info hidden">
+                                        <p><strong>File Size:</strong> <span
+                                                id="driving_license_back_attachment_size"></span>
+                                            KB
+                                        </p>
+                                        <p><strong>Resolution:</strong> <span
+                                                id="driving_license_back_attachment_resolution"></span></p>
+                                        <p><strong>File Type:</strong> <span
+                                                id="driving_license_back_attachment_type"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- Insurance --}}
+                            <div>
                                 <x-form.file-input name="insurance_attachment" label="Insurance Document"
-                                    accept=".jpg,.jpeg,.png,.pdf" hint="JPG/PNG/PDF, max 512KB" />
+                                    accept=".jpg,.jpeg,.png,.gif,.pdf" hint="JPG/PNG/GIF/PDF, max 512KB" />
                                 <div class="file-preview">
                                     <img id="insurance_attachment_preview" class="hidden"
                                         alt="Insurance Document Preview">
@@ -200,16 +246,18 @@
                         <!-- Work Information -->
                         <div>
                             <h2 class="section-title">Work Information</h2>
+                            <x-form.input-group name="pre_experience" label="Previous Experience (Years)" type="number"
+                                min="0" max="75" step="1" required hint="0–75 years"
+                                :value="old('pre_experience', 0)" />
                             <x-form.input-group name="joining_date" id="joining_date" label="Joining Date"
                                 type="date" required extra-attributes="onchange=validateJoiningDate()"
                                 hint="Must be at least 15 years after birth date" :value="old('joining_date')" />
                             <p id="date-error" class="error-text hidden">
                                 Joining date must be at least 15 years after the birth date.
                             </p>
-                            <x-form.input-group name="reference" label="Reference" type="text" minlength="3"
-                                maxlength="100" hint="e.g., Jane Smith" :value="old('reference')" />
-                            <x-form.input-group name="pre_experience" label="Previous Experience (Years)" type="number"
-                                min="0" max="50" step="1" hint="0–50 years" :value="old('pre_experience', 0)" />
+                            <x-form.input-group name="reference" label="Reference" type="text" minlength="4"
+                                maxlength="100" required title="4–100 characters" hint="e.g., Jane Smith"
+                                :value="old('reference')" />
                         </div>
 
                         <!-- Addresses -->
@@ -327,9 +375,11 @@
             }
         }
 
+
+        // image resize
         function resizeImage(file, maxWidth, maxHeight, maxSizeKB, callback) {
             if (!file.type.startsWith('image/')) {
-                callback(file, 0, 0); // Pass through non-image files
+                callback(file, 0, 0);
                 return;
             }
 
@@ -339,23 +389,24 @@
                 img.onload = function() {
                     let width = img.width;
                     let height = img.height;
+                    const aspectRatio = width / height;
 
-                    // Skip resizing if already within limits
-                    if (width <= maxWidth && height <= maxHeight && file.size <= maxSizeKB * 1024) {
-                        callback(file, width, height);
-                        return;
-                    }
-
-                    // Calculate new dimensions while maintaining aspect ratio
-                    if (width > height) {
-                        if (width > maxWidth) {
-                            height = Math.round((height * maxWidth) / width);
+                    // Determine target size with up/down-scaling
+                    if (width > maxWidth || height > maxHeight) {
+                        if (aspectRatio >= 1) {
                             width = maxWidth;
-                        }
-                    } else {
-                        if (height > maxHeight) {
-                            width = Math.round((width * maxHeight) / height);
+                            height = Math.round(maxWidth / aspectRatio);
+                        } else {
                             height = maxHeight;
+                            width = Math.round(maxHeight * aspectRatio);
+                        }
+                    } else if (width < 600 || height < 800) {
+                        if (aspectRatio >= 1) {
+                            width = 800;
+                            height = Math.round(800 / aspectRatio);
+                        } else {
+                            height = 800;
+                            width = Math.round(800 * aspectRatio);
                         }
                     }
 
@@ -365,29 +416,31 @@
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    // Convert to JPEG with quality adjustment
                     let quality = 0.9;
-                    let dataUrl;
+                    let dataUrl = '';
+                    let sizeKB = 0;
+
                     do {
                         dataUrl = canvas.toDataURL('image/jpeg', quality);
-                        const sizeKB = ((dataUrl.length * 3) / 4 / 1024).toFixed(2);
-                        if (sizeKB <= maxSizeKB) break;
-                        quality -= 0.1;
-                    } while (quality > 0.1);
+                        sizeKB = (dataUrl.length * 3) / 4 / 1024;
+                        quality -= 0.05;
+                    } while ((sizeKB > maxSizeKB || sizeKB < 50) && quality > 0.1);
 
-                    // Convert data URL to Blob
                     fetch(dataUrl)
                         .then(res => res.blob())
                         .then(blob => callback(blob, width, height))
-                        .catch(() => callback(file, img.width, img.height)); // Fallback to original
+                        .catch(() => callback(file, img.width, img.height));
                 };
-                img.onerror = () => callback(file, 0, 0); // Handle corrupt images
+
+                img.onerror = () => callback(file, 0, 0);
                 img.src = e.target.result;
             };
+
             reader.onerror = () => callback(file, 0, 0);
             reader.readAsDataURL(file);
         }
 
+        // image preview 
         function previewFile(inputId, previewId, infoId) {
             const input = document.getElementById(inputId);
             const preview = document.getElementById(previewId);
@@ -396,68 +449,50 @@
             const resolutionSpan = document.getElementById(`${inputId}_resolution`);
             const typeSpan = document.getElementById(`${inputId}_type`);
 
-            // Reset preview if no file is selected
-            if (!input.files || !input.files[0]) {
+            const resetUI = (message = '') => {
                 preview.src = '#';
                 preview.classList.add('hidden');
                 info.classList.add('hidden');
                 sizeSpan.textContent = '';
                 resolutionSpan.textContent = '';
                 typeSpan.textContent = '';
-                input.setCustomValidity('');
+                input.setCustomValidity(message);
+                if (message) alert(message);
+            };
+
+            if (!input.files || !input.files[0]) {
+                resetUI();
                 return;
             }
 
             const file = input.files[0];
-            const maxSize = 524288; // 512 KB in bytes
+            const maxSize = 524288; // 512 KB
             const fileType = file.type;
-            const isImage = fileType.startsWith('image/');
-            const isPDF = fileType === 'application/pdf';
-            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
 
-            // Validate file type
             if (!allowedTypes.includes(fileType)) {
-                alert('Invalid file type. Please upload JPG, PNG, WEBP, or PDF.');
                 input.value = '';
-                input.setCustomValidity('Invalid file type.');
-                preview.src = '#';
-                preview.classList.add('hidden');
-                info.classList.add('hidden');
-                sizeSpan.textContent = '';
-                resolutionSpan.textContent = '';
-                typeSpan.textContent = '';
+                resetUI('Invalid file type. Please upload JPG, PNG, GIF, or PDF.');
                 return;
             }
 
-            // Validate file size
-            if (file.size > maxSize) {
-                alert(`File size exceeds 512KB. Please choose a smaller file.`);
+            if (file.size > maxSize && fileType !== 'application/pdf') {
                 input.value = '';
-                input.setCustomValidity('File size exceeds 512KB.');
-                preview.src = '#';
-                preview.classList.add('hidden');
-                info.classList.add('hidden');
-                sizeSpan.textContent = '';
-                resolutionSpan.textContent = '';
-                typeSpan.textContent = '';
+                resetUI('File size exceeds 512KB. Please choose a smaller file.');
                 return;
             }
 
-            // Process file
-            if (isImage) {
+            if (fileType.startsWith('image/')) {
                 resizeImage(file, 1024, 1024, 512, (resizedBlob, width, height) => {
                     const url = URL.createObjectURL(resizedBlob);
                     preview.src = url;
                     preview.classList.remove('hidden');
                     info.classList.remove('hidden');
 
-                    // Update file info
-                    const sizeKB = (resizedBlob.size / 1024).toFixed(2);
-                    sizeSpan.textContent = sizeKB;
+                    sizeSpan.textContent = (resizedBlob.size / 1024).toFixed(2);
                     resolutionSpan.textContent = `${width}x${height}`;
                     typeSpan.textContent = resizedBlob.type.split('/')[1].toUpperCase();
 
-                    // Replace input file with resized blob
                     const newFile = new File([resizedBlob], file.name, {
                         type: resizedBlob.type
                     });
@@ -466,13 +501,11 @@
                     input.files = dataTransfer.files;
                     input.setCustomValidity('');
                 });
-            } else if (isPDF) {
+            } else {
                 preview.src = '#';
                 preview.classList.add('hidden');
                 info.classList.remove('hidden');
-
-                const sizeKB = (file.size / 1024).toFixed(2);
-                sizeSpan.textContent = sizeKB;
+                sizeSpan.textContent = (file.size / 1024).toFixed(2);
                 resolutionSpan.textContent = 'N/A (PDF)';
                 typeSpan.textContent = 'PDF';
                 input.setCustomValidity('');
@@ -482,7 +515,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadFlatpickr();
 
-            // Initialize character counters for address fields
             ['present_address', 'permanent_address'].forEach(id => {
                 const textarea = document.getElementById(id);
                 if (textarea) {
@@ -491,11 +523,19 @@
                 }
             });
 
-            // Attach file preview listeners
-            ['avatar_url', 'nid_attachment', 'driving_license_attachment', 'insurance_attachment'].forEach(id =>
-                document.getElementById(id)?.addEventListener('change', () => previewFile(id, `${id}_preview`,
-                    `${id}_info`))
-            );
+            [
+                'avatar_url',
+                'nid_front_attachment',
+                'nid_back_attachment',
+                'driving_license_front_attachment',
+                'driving_license_back_attachment',
+                'insurance_attachment'
+            ].forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('change', () => previewFile(id, `${id}_preview`, `${id}_info`));
+                }
+            });
         });
     </script>
 @endpush

@@ -1,5 +1,6 @@
-<header class="sticky top-0 z-40 w-full border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-    <div class="flex w-full items-center justify-between px-2 py-2 sm:px-4">
+<header
+    class="sticky top-0 z-40 w-full border-b border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:shadow-md">
+    <div class="flex w-full items-center justify-between px-2 py-2.5 sm:px-2">
         <!-- Left: Toggle and Logo -->
         <div class="flex items-center gap-3">
             <!-- Sidebar Toggle -->
@@ -60,8 +61,8 @@
                         <p class="text-sm font-medium text-gray-900 dark:text-white">
                             {{ auth()->user()->name ?? 'User' }}
                         </p>
-                        <p class="truncate text-xs text-gray-500 dark:text-gray-400">{{ auth()->user()->email ??
-                            'useremail@mail.com' }}</p>
+                        <p class="truncate text-xs text-gray-500 dark:text-gray-400">
+                            {{ auth()->user()->email ?? 'useremail@mail.com' }}</p>
                     </div>
                     <hr class="border-gray-200 dark:border-gray-700">
                     <a href=""

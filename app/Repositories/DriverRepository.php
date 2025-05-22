@@ -60,8 +60,8 @@ class DriverRepository implements DriverRepositoryInterface
      */
     public function softDelete(int $id): bool
     {
-        $employee = $this->findById($id);
-        return (bool) $employee->delete();
+        $driver = $this->findById($id);
+        return (bool) $driver->delete();
     }
 
     /**
@@ -69,7 +69,7 @@ class DriverRepository implements DriverRepositoryInterface
      */
     public function forceDelete(int $id): bool
     {
-        $employee = $this->findById($id, true);
-        return (bool) $employee->forceDelete();
+        $driver = $this->findById($id, true);
+        return (bool) $driver->forceDelete();
     }
 }

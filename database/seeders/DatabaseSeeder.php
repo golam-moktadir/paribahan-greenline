@@ -38,6 +38,8 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             EmployeeSeeder::class,
             DriverSeeder::class,
+            CategorySeeder::class,
+
         ]);
 
     }

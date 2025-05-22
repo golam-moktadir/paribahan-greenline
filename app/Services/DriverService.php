@@ -4,9 +4,7 @@ namespace App\Services;
 
 use App\Repositories\Interfaces\DriverRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Exception;
 
@@ -42,9 +40,7 @@ class DriverService
     public function createDriver(array $data)
     {
         $defaults = [
-            'employee_saved_by' => Auth::id() ?? 1,
-            'employee_save_status' => 1,
-            'employee_activation_id' => (string) Str::uuid(),
+            'created_by' => Auth::id() ?? 1,
         ];
 
         return $this->driverRepository->create(array_merge($defaults, $data));

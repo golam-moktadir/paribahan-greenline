@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class City extends Model
 {
     /** @use HasFactory<\Database\Factories\CityFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = "city";
 
@@ -24,5 +25,9 @@ class City extends Model
         "city_save_status",
         "city_timestamp",
     ];
+
+    public function stations(){
+        return $this->hasMany(Station::class, 'city_id');
+    }
 
 }

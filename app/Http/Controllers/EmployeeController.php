@@ -312,7 +312,6 @@ class EmployeeController extends Controller
 
     public function update(UpdateEmployeeRequest $request, $employee)
     {
-
         try {
             $employee = $this->employeeService->updateEmployee($employee, $request->validated());
 

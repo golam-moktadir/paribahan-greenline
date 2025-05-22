@@ -88,16 +88,6 @@ class UpdateEmployeeRequest extends FormRequest
     /**
      * Get the validated data with additional fields.
      */
-    // public function validated($key = null, $default = null)
-    // {
-    //     $validated = parent::validated();
-
-    //     return array_merge($validated, [
-    //         'employee_saved_by' => $this->input('employee_saved_by', auth()->id() ?? 1),
-    //         'employee_activation_id' => $this->input('employee_activation_id', Str::uuid()),
-    //     ]);
-    // }
-
 
     public function validated($key = null, $default = null)
     {
